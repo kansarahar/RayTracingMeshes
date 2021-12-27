@@ -36,7 +36,8 @@ public:
 	Vec3& operator -= (const Vec3& other) { x -= other.x, y -= other.y, z -= other.z; return *this; }
 	Vec3& operator *= (const Vec3& other) { x *= other.x, y *= other.y, z *= other.z; return *this; }
 
-	float& operator [] (unsigned i) { return (&x)[i]; }
+	float& operator [] (int i) { return (&x)[i]; }
+	const float& operator [] (int i) const { return (&x)[i]; }
 
 	// member variables
 	float x, y, z;
@@ -54,17 +55,20 @@ public:
 
 class Mat4 {
 public:
-	Mat4() {
-		for (unsigned i = 0; i < 4; i++) {
-			for (unsigned j = 0; j < 4; j++) { matrix[i][j] = (i != j) ? 0.0f : 1.0f; }
-		}
-	};
+	Mat4() {}
 
 	Mat4(float c) {
-		for (unsigned i = 0; i < 4; i++) {
-			for (unsigned j = 0; j < 4; j++) { matrix[i][j] = (i != j) ? 0.0f : c; }
+		matrix[0][0] = c;
+		matrix[1][1] = c;
+		matrix[2][2] = c;
+	}
+
+	Mat4(const Mat4& other) {
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				matrix[i][j] == other.matrix[i][j];
+			}
 		}
-		matrix[3][3] = 1;
 	}
 
 	Mat4(
@@ -77,18 +81,20 @@ public:
 		matrix[1][0] = e; matrix[1][1] = f; matrix[1][2] = g; matrix[1][3] = h;
 		matrix[2][0] = i; matrix[2][1] = j; matrix[2][2] = k; matrix[2][3] = l;
 		matrix[3][0] = m; matrix[3][1] = n; matrix[3][2] = o; matrix[3][3] = p;
-	};
+	}
 
 	Mat4 transpose() const {
 		Mat4 result = Mat4();
-		for (unsigned i = 0; i < 4; i++) {
-			for (unsigned j = 0; j < 4; j++) { result.matrix[i][j] = matrix[j][i]; }
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				result.matrix[i][j] = matrix[j][i];
+			}
 		}
 	}
 
 	Vec3 operator * (const Vec3& v) const {
 		Vec3 result = Vec3();
-		for (unsigned i = 0; i < 3; i++) {
+		for (int i = 0; i < 3; i++) {
 			result[i] = matrix[i][0] * v.x + matrix[i][1] * v.y + matrix[i][2] * v.z + matrix[i][3];
 		}
 		return result;
@@ -96,11 +102,11 @@ public:
 	// C = AB
 	Mat4 operator * (const Mat4& other) const {
 		Mat4 result = Mat4();
-		for (unsigned i = 0; i < 4; i++) {
-			for (unsigned j = 0; j < 4; j++) {
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
 				result.matrix[i][j] = 0;
-				for (unsigned k = 0; k < 4; k++) {
-					result.matrix[i][j] += matrix[i][k] * other.matrix[k][j];
+				for (int k = 0; k < 4; k++) {
+					result.matrix[i][j] += matrix[i][k] * other[k][j];
 				}
 			}
 		}
@@ -109,11 +115,22 @@ public:
 	// A' = BA
 	Mat4& operator *= (const Mat4& other) {
 		Mat4 result = other * (*this);
-		for (unsigned i = 0; i < 4; i++) {
-			for (unsigned j = 0; j < 4; j++) { matrix[i][j] = result.matrix[i][j]; }
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				matrix[i][j] = result[i][j];
+			}
 		}
 		return *this;
 	}
 
-	float matrix[4][4];
+	float* operator [] (int i) { return matrix[i]; }
+	const float* operator [] (int i) const { return matrix[i]; }
+
+
+	float matrix[4][4]{
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	};
 };

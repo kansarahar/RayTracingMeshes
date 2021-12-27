@@ -6,6 +6,5 @@
 class Geometry {
 public:
 	std::vector<Vec3> getVertices();
-	//std::vector<array[3]> getFaces();
-
+	//std::vector<int*> getFaces();
 };

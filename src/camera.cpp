@@ -6,11 +6,11 @@ Camera::Camera() :
 	position_(Vec3(0.0f, 0.0f, 1.0f)), lookat_(Vec3(0.0f, 0.0f, -1.0f)), up_(Vec3(0.0f, 1.0f, 0.0f)), right_(Vec3(1.0f, 0.0f, 0.0f)
 ) {}
 
-unsigned Camera::getNumPixelsX() { return xpixels_; }
+int Camera::getNumPixelsX() { return xpixels_; }
 
-unsigned Camera::getNumPixelsY() { return ypixels_; }
+int Camera::getNumPixelsY() { return ypixels_; }
 
-Ray Camera::pixelToRay(unsigned xpixel, unsigned ypixel) {
+Ray Camera::pixelToRay(int xpixel, int ypixel) {
 	float yfov = fov_ * (float)M_PI / 180.0f;
 	float xfov = aspect_ * fov_ * (float)M_PI / 180.0f;
 

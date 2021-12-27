@@ -5,32 +5,32 @@
 
 class ImageBufferPixel {
 public:
-	unsigned r, g, b;
+	int r, g, b;
 
 	ImageBufferPixel();
 	ImageBufferPixel(const Vec3& v);
-	ImageBufferPixel(unsigned r, unsigned g, unsigned b);
+	ImageBufferPixel(int r, int g, int b);
 
 	void setPixelValues(const Vec3& v);
-	void setPixelValues(unsigned r, unsigned g, unsigned b);
+	void setPixelValues(int r, int g, int b);
 };
 
 class ImageBuffer {
 public:
 
-	ImageBuffer(unsigned num_pixels_x, unsigned num_pixels_y);
+	ImageBuffer(int num_pixels_x, int num_pixels_y);
 	~ImageBuffer();
 
-	unsigned getNumPixelsX();
-	unsigned getNumPixelsY();
+	int getNumPixelsX();
+	int getNumPixelsY();
 
-	ImageBufferPixel getPixel(unsigned x, unsigned y);
-	void setPixel(unsigned x, unsigned y, const Vec3& v);
-	void setPixel(unsigned x, unsigned y, unsigned r, unsigned g, unsigned b);
+	ImageBufferPixel getPixel(int x, int y);
+	void setPixel(int x, int y, const Vec3& v);
+	void setPixel(int x, int y, int r, int g, int b);
 	
 	void saveToPPM(std::string image_name);
 
 private:
-	unsigned num_pixels_x_, num_pixels_y_;
+	int num_pixels_x_, num_pixels_y_;
 	ImageBufferPixel* pixel_grid_;
 };

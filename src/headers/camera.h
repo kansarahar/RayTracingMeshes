@@ -6,10 +6,10 @@ class Camera {
 public:
 	Camera();
 	
-	unsigned getNumPixelsX();
-	unsigned getNumPixelsY();
+	int getNumPixelsX();
+	int getNumPixelsY();
 
-	Ray pixelToRay(unsigned xpixel, unsigned ypixel);
+	Ray pixelToRay(int xpixel, int ypixel);
 
 private:
 	float fov_;
