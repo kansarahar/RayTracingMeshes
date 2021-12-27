@@ -7,7 +7,6 @@
 
 class Vec3 {
 public:
-	float x, y, z;
 
 	// constructors
 	Vec3() : x(0), y(0), z(0) {}
@@ -39,22 +38,22 @@ public:
 
 	float& operator [] (unsigned i) { return (&x)[i]; }
 
+	// member variables
+	float x, y, z;
 };
 
 class Ray {
 public:
-	Vec3 origin, direction;
-
 	Ray() : origin(Vec3()), direction(Vec3(0.0f, 0.0f, -1.0f)) {}
 	Ray(Vec3 origin, Vec3 direction) : origin(origin), direction(direction.unit()) {}
 
 	Vec3 at(const float& t) const { return origin + direction * t; }
+
+	Vec3 origin, direction;
 };
 
 class Mat4 {
 public:
-	float matrix[4][4];
-
 	Mat4() {
 		for (unsigned i = 0; i < 4; i++) {
 			for (unsigned j = 0; j < 4; j++) { matrix[i][j] = (i != j) ? 0.0f : 1.0f; }
@@ -94,6 +93,7 @@ public:
 		}
 		return result;
 	}
+	// C = AB
 	Mat4 operator * (const Mat4& other) const {
 		Mat4 result = Mat4();
 		for (unsigned i = 0; i < 4; i++) {
@@ -106,12 +106,14 @@ public:
 		}
 		return result;
 	}
+	// A' = BA
 	Mat4& operator *= (const Mat4& other) {
-		Mat4 result = *this * other;
+		Mat4 result = other * (*this);
 		for (unsigned i = 0; i < 4; i++) {
 			for (unsigned j = 0; j < 4; j++) { matrix[i][j] = result.matrix[i][j]; }
 		}
 		return *this;
 	}
 
+	float matrix[4][4];
 };

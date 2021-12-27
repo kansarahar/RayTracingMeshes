@@ -4,18 +4,21 @@
 
 class Camera {
 public:
-
 	Camera();
 	
+	unsigned getNumPixelsX();
+	unsigned getNumPixelsY();
+
 	Ray pixelToRay(unsigned xpixel, unsigned ypixel);
 
-	float _fov;
-	float _aspect;
-	int _ypixels;
-	int _xpixels;
+private:
+	float fov_;
+	float aspect_;
+	int ypixels_;
+	int xpixels_;
 
-	Vec3 _position;
-	Vec3 _lookat;
-	Vec3 _up;
-	Vec3 _right;
+	Vec3 position_;
+	Vec3 lookat_;
+	Vec3 up_;
+	Vec3 right_;
 };

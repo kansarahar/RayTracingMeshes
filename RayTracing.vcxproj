@@ -20,16 +20,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\camera.cpp" />
-    <ClCompile Include="src\object3D.cpp" />
+    <ClCompile Include="src\image_utils.cpp" />
+    <ClCompile Include="src\triangle.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\scene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\headers\mesh.h" />
+    <ClInclude Include="src\headers\object3D.h" />
     <ClInclude Include="src\headers\renderer.h" />
     <ClInclude Include="src\headers\camera.h" />
     <ClInclude Include="src\headers\scene.h" />
-    <ClInclude Include="src\headers\utils.h" />
+    <ClInclude Include="src\headers\image_utils.h" />
+    <ClInclude Include="src\headers\triangle.h" />
     <ClInclude Include="src\headers\vec.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\test.ppm" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
