@@ -2,7 +2,7 @@
 #include "headers/camera.h"
 
 Camera::Camera() : 
-	fov_(45.0f), aspect_(2), ypixels_(200), xpixels_((int)(aspect_* ypixels_)),
+	fov_(45.0f), aspect_(2), ypixels_(400), xpixels_((int)(aspect_* ypixels_)),
 	position_(Vec3(0.0f, 0.0f, 1.0f)), lookat_(Vec3(0.0f, 0.0f, -1.0f)), up_(Vec3(0.0f, 1.0f, 0.0f)), right_(Vec3(1.0f, 0.0f, 0.0f)
 ) {}
 

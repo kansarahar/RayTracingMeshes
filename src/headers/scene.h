@@ -2,8 +2,10 @@
 
 #include <vector>
 
-#include "object3D.h"
+#include "mesh.h"
 
 class Scene {
-	std::vector<Object3D*> objects;
+public:
+	std::vector<Mesh> meshes;
+	void add(Mesh* m) { meshes.push_back(*m); }
 };

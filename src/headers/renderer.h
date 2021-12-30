@@ -1,11 +1,23 @@
 #pragma once
 
+#include <string>
+
 #include "vec.h"
 #include "camera.h"
 #include "scene.h"
+#include "image_utils.h"
 
 class Renderer {
-	Renderer(Scene& scene, Camera& camera);
+public:
+	Renderer(Scene* scene, Camera* camera);
+	~Renderer();
 
-	//Ray pixelToRay()
+	void render();
+	void saveToPPM(std::string image_name);
+private:
+	float trace_(Ray& r);
+
+	ImageBuffer* image_buffer_;
+	Scene* scene_;
+	Camera* camera_;
 };

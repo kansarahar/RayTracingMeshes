@@ -3,30 +3,25 @@
 #include <vector>
 
 #include "headers/vec.h"
+#include "headers/renderer.h"
 #include "headers/camera.h"
+#include "headers/scene.h"
 #include "headers/image_utils.h"
-#include "headers/object3D.h"
-#include "headers/triangle.h"
+#include "headers/geometry.h"
+#include "headers/mesh.h"
 
 
 
 int main() {
-	//Camera cam = Camera();
 
-	//int xpx = cam.getNumPixelsX();
-	//int ypx = cam.getNumPixelsY();
+	Camera* c = new Camera();
+	Scene* s = new Scene();
 
-	//Triangle t = Triangle();
-	//ImageBuffer i = ImageBuffer(xpx, ypx);
-
-	//for (int y = 0; y < ypx; y++) {
-	//	for (int x = 0; x < xpx; x++) {
-	//		Ray r = cam.pixelToRay(x, y);
-	//		if (t.intersect(r) > 0) {
-	//			i.setPixel(x, y, Vec3(255, 0, 0));
-	//		}
-	//	}
-	//}
-	//i.saveToPPM("test.ppm");
-	Mat4 m = Mat4();
+	TriangleGeometry tg = TriangleGeometry(Vec3(0.5f, 0.0f, 0.0f), Vec3(0.0f, 0.5f, 0.0f));
+	Mesh* triangleMesh = new Mesh(tg);
+	s->add(triangleMesh);
+	
+	Renderer renderer = Renderer(s, c);
+	renderer.render();
+	renderer.saveToPPM("testRender.ppm");
 }
