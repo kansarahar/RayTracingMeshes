@@ -18,13 +18,12 @@ Renderer::~Renderer() {
 }
 
 bool Renderer::trace_(Ray& r) {
+	bool hit = false;
 	for (int mesh_ptr_idx = 0; mesh_ptr_idx < scene_->meshes.size(); mesh_ptr_idx++) {
-		Mesh& mesh = scene_->meshes[mesh_ptr_idx];
-		if (mesh.intersect(r)) {
-			return true;
-		}
+		Mesh* mesh = scene_->meshes[mesh_ptr_idx];
+		hit = mesh->intersect(r) || hit;
 	}
-	return false;
+	return hit;
 }
 
 void Renderer::render() {
@@ -32,7 +31,7 @@ void Renderer::render() {
 		for (int x = 0; x < camera_->getNumPixelsX(); x++) {
 			Ray r = camera_->pixelToRay(x, y);
 			if (trace_(r)) {
-				image_buffer_->setPixel(x, y, Vec3(255, 0, 0));
+				image_buffer_->setPixel(x, y, r.intersect_info.mesh->color);
 			}
 		}
 	}

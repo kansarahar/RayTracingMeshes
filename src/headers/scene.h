@@ -6,6 +6,6 @@
 
 class Scene {
 public:
-	std::vector<Mesh> meshes;
-	void add(Mesh* m) { meshes.push_back(*m); }
+	std::vector<Mesh*> meshes;
+	void add(Mesh* m) { meshes.push_back(m); }
 };

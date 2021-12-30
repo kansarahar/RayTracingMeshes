@@ -36,37 +36,22 @@ bool Mesh::mt_intersect_helper_(Face& face, Ray& r) {
 	if (v < 0 || u + v > 1) { return false; }
 	float t = q.dot(normal) / det;
 
+	if (r.intersect_info.t_nearest > t) {
+		r.intersect_info.mesh = this;
+		r.intersect_info.face = &face;
+		r.intersect_info.normal = normal.unit();
+		r.intersect_info.t_nearest = t;
+		r.intersect_info.hit = true;
+	}
+
 	return true;
 }
 
-bool Mesh::intersect_helper_(Face& face, Ray& r) {
-	Vec3& v0 = vertices_[face.v0];
-	Vec3& v1 = vertices_[face.v1];
-	Vec3& v2 = vertices_[face.v2];
-
-	Vec3 normal = ((v1 - v0).cross(v2 - v0)).unit();
-
-	float nd = normal.dot(r.direction);
-#if __BACKFACE_CULLING__
-	if (-nd < __INTERSECTION_TOLERANCE__) { return false; }
-#else
-	if (abs(nd) < __INTERSECTION_TOLERANCE__) { return false; }
-#endif
-	float t = normal.dot(v0 - r.origin) / nd;
-	Vec3 p = r.at(t);
-	float u = normal.dot((v0 - v2).cross(p - v2));
-	float v = normal.dot((v1 - v0).cross(p - v0));
-	float w = normal.dot((v2 - v1).cross(p - v2));
-	if (u > 0 && v > 0 && w > 0) {
-		return true;
-	}
-	return false;
-}
-
 bool Mesh::intersect(Ray& r) {
+	bool hit = false;
 	for (int face_idx = 0; face_idx < faces_.size(); face_idx++) {
 		Face face = faces_[face_idx];
-		return mt_intersect_helper_(face, r);
+		hit = mt_intersect_helper_(face, r) || hit;
 	}
-	return false;
+	return hit;
 }

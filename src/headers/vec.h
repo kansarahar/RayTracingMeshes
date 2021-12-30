@@ -4,6 +4,7 @@
 
 #include <math.h>
 #include <iostream>
+#include <limits>
 
 class Vec3 {
 public:
@@ -40,19 +41,6 @@ public:
 
 	// member variables
 	float x, y, z;
-};
-
-class Ray {
-public:
-	// constructors
-	Ray() : origin(Vec3()), direction(Vec3(0.0f, 0.0f, -1.0f)) {}
-	Ray(Vec3 origin, Vec3 direction) : origin(origin), direction(direction.unit()) {}
-
-	// simple operations
-	Vec3 at(const float& t) const { return origin + direction * t; }
-
-	// member variables
-	Vec3 origin, direction;
 };
 
 class Mat4 {
@@ -117,4 +105,31 @@ public:
 		0.0f, 0.0f, 1.0f, 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f
 	};
+};
+
+class Mesh;
+struct Face;
+struct IntersectInfo {
+	Mesh* mesh;
+	Face* face;
+	Vec3 normal;
+	float t_nearest;
+	bool hit;
+
+	IntersectInfo()
+		: mesh(nullptr), face(nullptr), normal(Vec3()), t_nearest(std::numeric_limits<float>::max()), hit(false) {}
+};
+
+class Ray {
+public:
+	// constructors
+	Ray() : origin(Vec3()), direction(Vec3(0.0f, 0.0f, -1.0f)), intersect_info(IntersectInfo()) {}
+	Ray(Vec3 origin, Vec3 direction) : origin(origin), direction(direction.unit()), intersect_info(IntersectInfo()) {}
+
+	// simple operations
+	Vec3 at(const float& t) const { return origin + direction * t; }
+
+	// member variables
+	Vec3 origin, direction;
+	IntersectInfo intersect_info;
 };

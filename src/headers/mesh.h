@@ -10,9 +10,9 @@ class Mesh {
 public:
 	Mesh(Geometry& g);
 	bool intersect(Ray& r);
+	Vec3 color;
 private:
 	bool mt_intersect_helper_(Face& face, Ray& r);
-	bool intersect_helper_(Face& face, Ray& r);
 
 	std::vector<Vec3> vertices_;
 	std::vector<Face> faces_;
