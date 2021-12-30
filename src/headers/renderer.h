@@ -15,7 +15,7 @@ public:
 	void render();
 	void saveToPPM(std::string image_name);
 private:
-	float trace_(Ray& r);
+	bool trace_(Ray& r);
 
 	ImageBuffer* image_buffer_;
 	Scene* scene_;

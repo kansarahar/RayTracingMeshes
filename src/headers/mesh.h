@@ -4,13 +4,15 @@
 #include "vec.h"
 #include "geometry.h"
 
+
+
 class Mesh {
 public:
 	Mesh(Geometry& g);
-	float intersect(Ray& r);
+	bool intersect(Ray& r);
 private:
-	float mt_intersect_helper_(Ray& r, Face& face);
-	float intersect_helper_(Ray& r, Face& face);
+	bool mt_intersect_helper_(Face& face, Ray& r);
+	bool intersect_helper_(Face& face, Ray& r);
 
 	std::vector<Vec3> vertices_;
 	std::vector<Face> faces_;

@@ -17,20 +17,21 @@ Renderer::~Renderer() {
 	delete image_buffer_;
 }
 
-float Renderer::trace_(Ray& r) {
+bool Renderer::trace_(Ray& r) {
 	for (int mesh_ptr_idx = 0; mesh_ptr_idx < scene_->meshes.size(); mesh_ptr_idx++) {
 		Mesh& mesh = scene_->meshes[mesh_ptr_idx];
-		float t = mesh.intersect(r);
-		if (t > 0) { return t; }
+		if (mesh.intersect(r)) {
+			return true;
+		}
 	}
-	return -1;
+	return false;
 }
 
 void Renderer::render() {
 	for (int y = 0; y < camera_->getNumPixelsY(); y++) {
 		for (int x = 0; x < camera_->getNumPixelsX(); x++) {
 			Ray r = camera_->pixelToRay(x, y);
-			if (trace_(r) > 0) {
+			if (trace_(r)) {
 				image_buffer_->setPixel(x, y, Vec3(255, 0, 0));
 			}
 		}
