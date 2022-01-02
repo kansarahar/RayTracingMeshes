@@ -37,11 +37,11 @@ public:
 	TriangleGeometry(Vec3 v1, Vec3 v2);
 };
 
-//class CubeGeometry: public Geometry {
-//public:
-//	CubeGeometry();
-//	CubeGeometry(float side_length);
-//};
+class CubeGeometry : public Geometry {
+public:
+	CubeGeometry();
+	CubeGeometry(float side_length);
+};
 
 //class SphereGeometry : public Geometry {
 //public:

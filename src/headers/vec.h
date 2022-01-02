@@ -110,14 +110,13 @@ public:
 class Mesh;
 struct Face;
 struct IntersectInfo {
-	Mesh* mesh;
+	Mesh* nearest_mesh;
 	Face* face;
 	Vec3 normal;
-	float t_nearest;
-	bool hit;
+	float t;
 
 	IntersectInfo()
-		: mesh(nullptr), face(nullptr), normal(Vec3()), t_nearest(std::numeric_limits<float>::max()), hit(false) {}
+		: nearest_mesh(nullptr), face(nullptr), normal(Vec3()), t(std::numeric_limits<float>::max()) {}
 };
 
 class Ray {

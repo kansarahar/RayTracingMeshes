@@ -10,6 +10,7 @@ Mesh::Mesh(Geometry& g) {
 	vertex_normals_ = g.getVertexNormals();
 
 	faces_ = g.getFaces();
+	color = Vec3(255, 0, 0);
 }
 
 bool Mesh::mt_intersect_helper_(Face& face, Ray& r) {
@@ -35,22 +36,21 @@ bool Mesh::mt_intersect_helper_(Face& face, Ray& r) {
 	float v = l1.dot(dxq) / det;
 	if (v < 0 || u + v > 1) { return false; }
 	float t = q.dot(normal) / det;
+	if (t < 0) { return false; }
 
-	if (r.intersect_info.t_nearest > t) {
-		r.intersect_info.mesh = this;
+	if (r.intersect_info.t > t) {
+		r.intersect_info.nearest_mesh = this;
 		r.intersect_info.face = &face;
 		r.intersect_info.normal = normal.unit();
-		r.intersect_info.t_nearest = t;
-		r.intersect_info.hit = true;
+		r.intersect_info.t = t * (1 - __INTERSECTION_TOLERANCE__);
 	}
-
 	return true;
 }
 
 bool Mesh::intersect(Ray& r) {
 	bool hit = false;
 	for (int face_idx = 0; face_idx < faces_.size(); face_idx++) {
-		Face face = faces_[face_idx];
+		Face& face = faces_[face_idx];
 		hit = mt_intersect_helper_(face, r) || hit;
 	}
 	return hit;

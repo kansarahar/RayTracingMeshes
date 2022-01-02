@@ -14,8 +14,10 @@ public:
 
 	void render();
 	void saveToPPM(std::string image_name);
+	void saveToBMP(std::string image_name);
 private:
 	bool trace_(Ray& r);
+	Vec3 castRay_(Ray& r, Light& l);
 
 	ImageBuffer* image_buffer_;
 	Scene* scene_;

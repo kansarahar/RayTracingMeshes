@@ -33,11 +33,55 @@ TriangleGeometry::TriangleGeometry(Vec3 v1, Vec3 v2) {
 	setVertexNormals(vertex_normals);
 }
 
-//CubeGeometry::CubeGeometry() : CubeGeometry(1.0f) {}
-//
-//CubeGeometry::CubeGeometry(float side_length) {
-//
-//}
+CubeGeometry::CubeGeometry() : CubeGeometry(1.0f) {}
+
+CubeGeometry::CubeGeometry(float side_length) {
+	std::vector<Vec3> vertices;
+	std::vector<Face> faces;
+
+	vertices.reserve(8);
+	faces.reserve(12);
+
+	float s = side_length / 2;
+
+	vertices.push_back(Vec3(s, s, s)); // 0
+	vertices.push_back(Vec3(-s, s, s)); // 1
+	vertices.push_back(Vec3(s, -s, s)); // 2
+	vertices.push_back(Vec3(s, s, -s)); // 3
+	vertices.push_back(Vec3(-s, -s, s)); // 4
+	vertices.push_back(Vec3(s, -s, -s)); // 5
+	vertices.push_back(Vec3(-s, s, -s)); // 6
+	vertices.push_back(Vec3(-s, -s, -s)); // 7
+
+	// faces touching vertex 0
+	faces.push_back(Face(0, 1, 4));
+	faces.push_back(Face(0, 4, 2));
+	faces.push_back(Face(0, 2, 5));
+	faces.push_back(Face(0, 5, 3));
+	faces.push_back(Face(0, 3, 6));
+	faces.push_back(Face(0, 6, 1));
+
+	// faces touching vertex 7
+	faces.push_back(Face(7, 6, 3));
+	faces.push_back(Face(7, 3, 5));
+	faces.push_back(Face(7, 5, 2));
+	faces.push_back(Face(7, 2, 4));
+	faces.push_back(Face(7, 4, 1));
+	faces.push_back(Face(7, 1, 6));
+
+	setVertices(vertices);
+	setFaces(faces);
+
+	// calculate vertex normals
+	std::vector<Vec3> vertex_normals;
+	vertex_normals.reserve(vertices.size());
+
+	for (auto it = vertices.begin(); it != vertices.end(); it++) {
+		vertex_normals.push_back(it->unit());
+	}
+
+	setVertexNormals(vertex_normals);
+}
 
 //SphereGeometry::SphereGeometry() {}
 //

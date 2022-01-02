@@ -29,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\headers\geometry.h" />
+    <ClInclude Include="src\headers\light.h" />
     <ClInclude Include="src\headers\mesh.h" />
     <ClInclude Include="src\headers\renderer.h" />
     <ClInclude Include="src\headers\camera.h" />

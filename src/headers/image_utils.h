@@ -21,14 +21,15 @@ public:
 	ImageBuffer(int num_pixels_x, int num_pixels_y);
 	~ImageBuffer();
 
-	int getNumPixelsX();
-	int getNumPixelsY();
+	int getNumPixelsX() const;
+	int getNumPixelsY() const;
 
 	ImageBufferPixel getPixel(int x, int y);
 	void setPixel(int x, int y, const Vec3& v);
 	void setPixel(int x, int y, int r, int g, int b);
 	
 	void saveToPPM(std::string image_name);
+	void saveToBMP(std::string image_name);
 
 private:
 	int num_pixels_x_, num_pixels_y_;

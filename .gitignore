@@ -3,3 +3,4 @@ build/
 intermediates/
 RayTracing.vcxproj.user
 *.ppm
+*.bmp
