@@ -14,8 +14,9 @@ public:
 private:
 	float fov_;
 	float aspect_;
-	int ypixels_;
-	int xpixels_;
+	float resolution_;
+	int num_pixels_y_;
+	int num_pixels_x_;
 
 	Vec3 position_;
 	Vec3 lookat_;

@@ -33,7 +33,7 @@ int main() {
 
 	Camera* c = new Camera();
 	Scene* s = new Scene();
-	Light* l = new Light(Vec3(1,-1,-1), Vec3(255,255,255), 0.9f);
+	Light* l = new Light(Vec3(0.5,-1,-1), Vec3(255,255,255), 0.9f);
 	s->add(l);
 
 	//TriangleGeometry tg1 = TriangleGeometry(Vec3(0.5f, 0.0f, 0.0f), Vec3(0.0f, 0.5f, 0.0f));
