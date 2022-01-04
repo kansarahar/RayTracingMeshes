@@ -33,8 +33,8 @@ int main() {
 
 	Camera* c = new Camera();
 	Scene* s = new Scene();
-	Light* l = new Light(Vec3(0.5,-1,-1), Vec3(255,255,255), 0.9f);
-	s->add(l);
+	Light* dl = new DirectionalLight(Vec3(0.5,-1,-1), Vec3(255,255,255), 0.9f);
+	s->add(dl);
 
 	//TriangleGeometry tg1 = TriangleGeometry(Vec3(0.5f, 0.0f, 0.0f), Vec3(0.0f, 0.5f, 0.0f));
 	//TriangleGeometry tg2 = TriangleGeometry(Vec3(0.25f, 0.10f, 0.25f), Vec3(-0.1f, 0.25f, -0.25f));
@@ -45,10 +45,24 @@ int main() {
 	//triangleMesh1->color = Vec3(255, 0, 0);
 	//triangleMesh2->color = Vec3(0, 255, 0);
 
-	CubeGeometry c1 = CubeGeometry(0.5f);
-	Mesh* cubeMesh = new Mesh(c1);
-	s->add(cubeMesh);
+	//CubeGeometry c1 = CubeGeometry(0.5f);
+	//Mesh* cubeMesh = new Mesh(c1);
+	//s->add(cubeMesh);
+	//cubeMesh->useVertexNormals();
 	//cubeMesh->color = Vec3(0, 0, 255);
+	//cubeMesh->rotateSelfX(30);
+	//cubeMesh->rotateSelfY(30);
+	//cubeMesh->translate(Vec3(0.25, 0.25, -2));
+	//cubeMesh->applyTransformations();
+
+	//c->translate(Vec3(0.1, 0, 0));
+	//c->rotateSelfY(-5);
+	SphereGeometry sg = SphereGeometry(0.25, 8,8);
+	Mesh* sphereMesh = new Mesh(sg);
+	s->add(sphereMesh);
+	sphereMesh->useVertexNormals();
+	//sphereMesh->rotateSelfY(-30);
+	//sphereMesh->applyTransformations();
 
 	Renderer renderer = Renderer(s, c);
 	renderer.render();

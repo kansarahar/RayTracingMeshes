@@ -9,6 +9,11 @@ public:
 	int getNumPixelsX();
 	int getNumPixelsY();
 
+	void translate(Vec3 v);
+	void rotateSelfX(float degrees);
+	void rotateSelfY(float degrees);
+	void rotateSelfZ(float degrees);
+
 	Ray pixelToRay(int xpixel, int ypixel);
 
 private:
@@ -22,4 +27,5 @@ private:
 	Vec3 lookat_;
 	Vec3 up_;
 	Vec3 right_;
+
 };

@@ -43,12 +43,9 @@ public:
 	CubeGeometry(float side_length);
 };
 
-//class SphereGeometry : public Geometry {
-//public:
-//	SphereGeometry();
-//	SphereGeometry(int horizontal_segments, int vertical_segments);
-//	SphereGeometry(float radius, int horizontal_segments, int vertical_segments);
-//protected:
-//	void constructGeometry() override;
-//	void constructGeometry(float radius, int horizontal_segments, int vertical_segments);
-//};
+class SphereGeometry : public Geometry {
+public:
+	SphereGeometry();
+	SphereGeometry(int horizontal_segments, int vertical_segments);
+	SphereGeometry(float radius, int horizontal_segments, int vertical_segments);
+};

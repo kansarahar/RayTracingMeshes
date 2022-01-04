@@ -52,6 +52,11 @@ public:
 		matrix[1][1] = c;
 		matrix[2][2] = c;
 	}
+	Mat4(Vec3 v) {
+		matrix[0][0] = v.x;
+		matrix[1][1] = v.y;
+		matrix[2][2] = v.z;
+	}
 	Mat4(
 		float a, float b, float c, float d,
 		float e, float f, float g, float h,
@@ -72,6 +77,7 @@ public:
 				result.matrix[i][j] = matrix[j][i];
 			}
 		}
+		return result;
 	}
 
 	// overloaded operators

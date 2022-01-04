@@ -29,16 +29,21 @@ bool Renderer::trace_(Ray& r) {
 
 Vec3 Renderer::castRay_(Ray& r, Light& l) {
 	if (trace_(r)) {
-		Vec3 light_intensity = l.getIntensity();
-		Vec3 light_direction = l.getDirection();
-		Vec3 shadow_ray_origin = r.at(r.intersect_info.t);
-		Ray shadow_ray = Ray(shadow_ray_origin, light_direction * -1);
+		if (l.type == LightType::directional) {
+			DirectionalLight& dl = (DirectionalLight&)l;
+			Vec3 light_luminosity = dl.getLuminosity();
+			Vec3 light_direction = dl.getDirection();
+			Ray shadow_ray = Ray(r.at(r.intersect_info.t), light_direction * -1);
 
-		if (trace_(shadow_ray)) {
-			return Vec3(0, 0, 0);
+			if (trace_(shadow_ray)
+				&& shadow_ray.intersect_info.nearest_mesh != r.intersect_info.nearest_mesh
+				&& shadow_ray.intersect_info.face != r.intersect_info.face
+			) {
+				return Vec3(0, 0, 0);
+			}
+
+			return (r.intersect_info.nearest_mesh->color * light_luminosity) * std::max(0.0f, (r.intersect_info.normal.dot(shadow_ray.direction)));
 		}
-
-		return (r.intersect_info.nearest_mesh->color * light_intensity) * std::max(0.0f, (r.intersect_info.normal.dot(shadow_ray.direction)));
 	}
 	return scene_->getBackgroundColor();
 }

@@ -9,7 +9,19 @@
 class Mesh {
 public:
 	Mesh(Geometry& g);
+	Vec3 getPosition();
+	void useVertexNormals();
+
 	bool intersect(Ray& r);
+
+	// transformations
+	void translate(Vec3 v);
+	void rotateSelfX(float degrees);
+	void rotateSelfY(float degrees);
+	void rotateSelfZ(float degrees);
+	void applyTransformations();
+
+
 	Vec3 color;
 private:
 	bool mt_intersect_helper_(Face& face, Ray& r);
@@ -19,8 +31,9 @@ private:
 
 	std::vector<Vec3> vertex_normals_;
 
-	//Vec3 center_;
-	//Mat4 transformations_;
+	bool use_vertex_normals_;
+	Vec3 position_;
+	Mat4 transformations_;
 };
 
 
