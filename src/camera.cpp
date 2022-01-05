@@ -14,6 +14,19 @@ Camera::Camera() {
 	right_ = Vec3(1.0f, 0.0f, 0.0f);
 }
 
+Camera::Camera(float fov, float aspect, float resolution) {
+	fov_ = fov;
+	aspect_ = aspect;
+	resolution_ = resolution;
+	num_pixels_y_ = (int)(fov_ * resolution_);
+	num_pixels_x_ = (int)(aspect_ * fov_ * resolution_);
+
+	position_ = Vec3(0.0f, 0.0f, 1.0f);
+	lookat_ = Vec3(0.0f, 0.0f, -1.0f);
+	up_ = Vec3(0.0f, 1.0f, 0.0f);
+	right_ = Vec3(1.0f, 0.0f, 0.0f);
+}
+
 int Camera::getNumPixelsX() { return num_pixels_x_; }
 
 int Camera::getNumPixelsY() { return num_pixels_y_; }

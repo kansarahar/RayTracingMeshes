@@ -149,3 +149,34 @@ SphereGeometry::SphereGeometry(float radius, int horizontal_segments, int vertic
 	setVertexNormals(vertex_normals);
 	setFaces(faces);
 }
+
+PlaneGeometry::PlaneGeometry()
+	: PlaneGeometry(1) {}
+
+PlaneGeometry::PlaneGeometry(float side_length) {
+	std::vector<Vec3> vertices;
+	std::vector<Vec3> vertex_normals;
+	std::vector<Face> faces;
+
+	vertices.reserve(4);
+	vertex_normals.reserve(4);
+	faces.reserve(2);
+
+	float s = side_length / 2;
+	vertices.push_back(Vec3(s, s, 0));
+	vertices.push_back(Vec3(-s, s, 0));
+	vertices.push_back(Vec3(s, -s, 0));
+	vertices.push_back(Vec3(-s, -s, 0));
+	
+	vertex_normals.push_back(Vec3(0, 0, 1));
+	vertex_normals.push_back(Vec3(0, 0, 1));
+	vertex_normals.push_back(Vec3(0, 0, 1));
+	vertex_normals.push_back(Vec3(0, 0, 1));
+
+	faces.push_back(Face(0, 1, 2));
+	faces.push_back(Face(3, 2, 1));
+
+	setVertices(vertices);
+	setVertexNormals(vertex_normals);
+	setFaces(faces);
+}

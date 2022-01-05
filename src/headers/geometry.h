@@ -49,3 +49,9 @@ public:
 	SphereGeometry(int horizontal_segments, int vertical_segments);
 	SphereGeometry(float radius, int horizontal_segments, int vertical_segments);
 };
+
+class PlaneGeometry : public Geometry {
+public:
+	PlaneGeometry();
+	PlaneGeometry(float side_length);
+};

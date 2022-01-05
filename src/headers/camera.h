@@ -5,6 +5,7 @@
 class Camera {
 public:
 	Camera();
+	Camera(float fov, float aspect, float resolution);
 	
 	int getNumPixelsX();
 	int getNumPixelsY();
