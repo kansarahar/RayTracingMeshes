@@ -6,58 +6,99 @@
 #include <iostream>
 #include <limits>
 
+template <typename T>
+class Vec2 {
+public:
+	// constructors
+	Vec2<T>() : x(T(0)), y(T(0)) {}
+	Vec2<T>(T x, T y) : x(x), y(y) {}
+
+	// simple operations
+	T dot(const Vec2<T>& other) const { return x * other.x + y * other.y; }
+	
+	T norm() const { return sqrt(this->dot(*this)); }
+	T norm2() const { return this->dot(*this); }
+	Vec2<T> unit() const { return *this / this->norm(); }
+
+	// overloaded operators
+	Vec2<T> operator * (const float& c) const { return Vec2<T>(x * c, y * c); }
+	Vec2<T> operator / (const float& c) const { return Vec2<T>(x / c, y / c); }
+
+	Vec2<T> operator + (const Vec2<T>& other) const { return Vec2<T>(x + other.x, y + other.y); }
+	Vec2<T> operator - (const Vec2<T>& other) const { return Vec2<T>(x - other.x, y - other.y); }
+	Vec2<T> operator * (const Vec2<T>& other) const { return Vec2<T>(x * other.x, y * other.y); }
+
+	Vec2<T>& operator *= (const T& c) { x *= c, y *= c; return *this; }
+	Vec2<T>& operator /= (const T& c) { x /= c, y /= c; return *this; }
+
+	Vec2<T>& operator += (const Vec2<T>& other) { x += other.x, y += other.y; return *this; }
+	Vec2<T>& operator -= (const Vec2<T>& other) { x -= other.x, y -= other.y; return *this; }
+	Vec2<T>& operator *= (const Vec2<T>& other) { x *= other.x, y *= other.y; return *this; }
+
+	T& operator [] (int i) { return (&x)[i]; }
+	const T& operator [] (int i) const { return (&x)[i]; }
+
+	// member variables
+	T x, y;
+};
+typedef Vec2<float> Vec2f;
+typedef Vec2<int> Vec2i;
+
+template <typename T>
 class Vec3 {
 public:
 	// constructors
-	Vec3() : x(0.0f), y(0.0f), z(0.0f) {}
-	Vec3(float x, float y, float z) : x(x), y(y), z(z) {}
+	Vec3<T>() : x(T(0)), y(T(0)), z(T(0)) {}
+	Vec3<T>(T x, T y, T z) : x(x), y(y), z(z) {}
 
 	// simple operations
-	float dot(const Vec3& other) const { return x * other.x + y * other.y + z * other.z; }
-	Vec3 cross(const Vec3& other) const { return Vec3(y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x); }
+	T dot(const Vec3<T>& other) const { return x * other.x + y * other.y + z * other.z; }
+	Vec3<T> cross(const Vec3<T>& other) const { return Vec3<T>(y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x); }
 	
-	float norm() const { return sqrt(this->dot(*this)); }
-	float norm2() const { return this->dot(*this); }
+	T norm() const { return sqrt(this->dot(*this)); }
+	T norm2() const { return this->dot(*this); }
 
-	Vec3 unit() const { return *this / this->norm(); }
+	Vec3<T> unit() const { return *this / this->norm(); }
 
 	// overloaded operators
-	Vec3 operator * (const float& c) const { return Vec3(x * c, y * c, z * c); }
-	Vec3 operator / (const float& c) const { return Vec3(x / c, y / c, z / c); }
+	Vec3<T> operator * (const T& c) const { return Vec3<T>(x * c, y * c, z * c); }
+	Vec3<T> operator / (const T& c) const { return Vec3<T>(x / c, y / c, z / c); }
 
-	Vec3 operator + (const Vec3& other) const { return Vec3(x + other.x, y + other.y, z + other.z); }
-	Vec3 operator - (const Vec3& other) const { return Vec3(x - other.x, y - other.y, z - other.z); }
-	Vec3 operator * (const Vec3& other) const { return Vec3(x * other.x, y * other.y, z * other.z); }
+	Vec3<T> operator + (const Vec3<T>& other) const { return Vec3<T>(x + other.x, y + other.y, z + other.z); }
+	Vec3<T> operator - (const Vec3<T>& other) const { return Vec3<T>(x - other.x, y - other.y, z - other.z); }
+	Vec3<T> operator * (const Vec3<T>& other) const { return Vec3<T>(x * other.x, y * other.y, z * other.z); }
 
-	Vec3& operator *= (const float& c) { x *= c, y *= c, z *= c; return *this; }
-	Vec3& operator /= (const float& c) { x /= c, y /= c, z /= c; return *this; }
+	Vec3<T>& operator *= (const T& c) { x *= c, y *= c, z *= c; return *this; }
+	Vec3<T>& operator /= (const T& c) { x /= c, y /= c, z /= c; return *this; }
 
-	Vec3& operator += (const Vec3& other) { x += other.x, y += other.y, z += other.z; return *this; }
-	Vec3& operator -= (const Vec3& other) { x -= other.x, y -= other.y, z -= other.z; return *this; }
-	Vec3& operator *= (const Vec3& other) { x *= other.x, y *= other.y, z *= other.z; return *this; }
+	Vec3<T>& operator += (const Vec3<T>& other) { x += other.x, y += other.y, z += other.z; return *this; }
+	Vec3<T>& operator -= (const Vec3<T>& other) { x -= other.x, y -= other.y, z -= other.z; return *this; }
+	Vec3<T>& operator *= (const Vec3<T>& other) { x *= other.x, y *= other.y, z *= other.z; return *this; }
 
-	float& operator [] (int i) { return (&x)[i]; }
-	const float& operator [] (int i) const { return (&x)[i]; }
+	T& operator [] (int i) { return (&x)[i]; }
+	const T& operator [] (int i) const { return (&x)[i]; }
 
 	// member variables
-	float x, y, z;
+	T x, y, z;
 };
+typedef Vec3<float> Vec3f;
+typedef Vec3<int> Vec3i;
 
-class Mat4 {
+class Mat4f {
 public:
 	// constructors
-	Mat4() {}
-	Mat4(float c) {
+	Mat4f() {}
+	Mat4f(float c) {
 		matrix[0][0] = c;
 		matrix[1][1] = c;
 		matrix[2][2] = c;
 	}
-	Mat4(Vec3 v) {
+	Mat4f(Vec3f v) {
 		matrix[0][0] = v.x;
 		matrix[1][1] = v.y;
 		matrix[2][2] = v.z;
 	}
-	Mat4(
+	Mat4f(
 		float a, float b, float c, float d,
 		float e, float f, float g, float h,
 		float i, float j, float k, float l,
@@ -70,8 +111,8 @@ public:
 	}
 
 	// simple operations
-	Mat4 transpose() const {
-		Mat4 result;
+	Mat4f transpose() const {
+		Mat4f result;
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				result.matrix[i][j] = matrix[j][i];
@@ -81,15 +122,15 @@ public:
 	}
 
 	// overloaded operators
-	Vec3 operator * (const Vec3& v) const {
-		Vec3 result;
+	Vec3f operator * (const Vec3f& v) const {
+		Vec3f result;
 		for (int i = 0; i < 3; i++) {
 			result[i] = matrix[i][0] * v[0] + matrix[i][1] * v[1] + matrix[i][2] * v[2] + matrix[i][3];
 		}
 		return result;
 	}
-	Mat4 operator * (const Mat4& other) const {
-		Mat4 result;
+	Mat4f operator * (const Mat4f& other) const {
+		Mat4f result;
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				result.matrix[i][j] = 0;
@@ -114,27 +155,26 @@ public:
 };
 
 class Mesh;
-struct Face;
 struct IntersectInfo {
 	Mesh* nearest_mesh;
-	Face* face;
-	Vec3 normal;
+	Vec3i* face;
+	Vec3f normal;
 	float t;
 
 	IntersectInfo()
-		: nearest_mesh(nullptr), face(nullptr), normal(Vec3()), t(std::numeric_limits<float>::max()) {}
+		: nearest_mesh(nullptr), face(nullptr), normal(Vec3f()), t(std::numeric_limits<float>::max()) {}
 };
 
 class Ray {
 public:
 	// constructors
-	Ray() : origin(Vec3()), direction(Vec3(0.0f, 0.0f, -1.0f)), intersect_info(IntersectInfo()) {}
-	Ray(Vec3 origin, Vec3 direction) : origin(origin), direction(direction.unit()), intersect_info(IntersectInfo()) {}
+	Ray() : origin(Vec3f()), direction(Vec3f(0.0f, 0.0f, -1.0f)), intersect_info(IntersectInfo()) {}
+	Ray(Vec3f origin, Vec3f direction) : origin(origin), direction(direction.unit()), intersect_info(IntersectInfo()) {}
 
 	// simple operations
-	Vec3 at(const float& t) const { return origin + direction * t; }
+	Vec3f at(const float& t) const { return origin + direction * t; }
 
 	// member variables
-	Vec3 origin, direction;
+	Vec3f origin, direction;
 	IntersectInfo intersect_info;
 };

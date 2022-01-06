@@ -10,7 +10,7 @@ public:
 	int getNumPixelsX();
 	int getNumPixelsY();
 
-	void translate(Vec3 v);
+	void translate(Vec3f v);
 	void rotateSelfX(float degrees);
 	void rotateSelfY(float degrees);
 	void rotateSelfZ(float degrees);
@@ -24,9 +24,9 @@ private:
 	int num_pixels_y_;
 	int num_pixels_x_;
 
-	Vec3 position_;
-	Vec3 lookat_;
-	Vec3 up_;
-	Vec3 right_;
+	Vec3f position_;
+	Vec3f lookat_;
+	Vec3f up_;
+	Vec3f right_;
 
 };

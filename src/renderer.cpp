@@ -29,34 +29,34 @@ bool Renderer::trace_(Ray& r) {
 	return hit;
 }
 
-Vec3 Renderer::castRay_(Ray& r, Light& l) {
+Vec3f Renderer::castRay_(Ray& r, Light& l) {
 	if (trace_(r)) {
 		if (l.getType() == LightType::directional) {
 			DirectionalLight& dl = (DirectionalLight&)l;
-			Vec3 light_luminosity = dl.getLuminosity();
-			Vec3 light_direction = dl.getDirection();
+			Vec3f light_luminosity = dl.getLuminosity();
+			Vec3f light_direction = dl.getDirection();
 			Ray shadow_ray = Ray(r.at(r.intersect_info.t), light_direction * -1);
 
 			if (trace_(shadow_ray)
 				&& !(shadow_ray.intersect_info.nearest_mesh == r.intersect_info.nearest_mesh
 				&& shadow_ray.intersect_info.face == r.intersect_info.face)
 			) {
-				return Vec3(0, 0, 0);
+				return Vec3f(0, 0, 0);
 			}
 
 			return (r.intersect_info.nearest_mesh->color * light_luminosity) * std::max(0.0f, (r.intersect_info.normal.dot(shadow_ray.direction)));
 		}
 		if (l.getType() == LightType::point) {
 			PointLight& pl = (PointLight&)l;
-			Vec3 light_luminosity = pl.getLuminosity();
-			Vec3 light_direction = (r.at(r.intersect_info.t) - pl.getPosition()).unit();
+			Vec3f light_luminosity = pl.getLuminosity();
+			Vec3f light_direction = (r.at(r.intersect_info.t) - pl.getPosition()).unit();
 			Ray shadow_ray = Ray(r.at(r.intersect_info.t), light_direction * -1);
 
 			if (trace_(shadow_ray)
 				&& !(shadow_ray.intersect_info.nearest_mesh == r.intersect_info.nearest_mesh
 				&& shadow_ray.intersect_info.face == r.intersect_info.face)
 			) {
-				return Vec3(0, 0, 0);
+				return Vec3f(0, 0, 0);
 			}
 
 			return (r.intersect_info.nearest_mesh->color * light_luminosity) * std::max(0.0f, (r.intersect_info.normal.dot(shadow_ray.direction)));
@@ -70,13 +70,13 @@ Vec3 Renderer::castRay_(Ray& r, Light& l) {
 				}
 			}
 			AreaLight& al = (AreaLight&)l;
-			Vec3 light_luminosity = al.getLuminosity();
-			Vec3 axes1 = al.getAxis1();
-			Vec3 axes2 = al.getAxis2();
-			Vec3 collected_illumination = Vec3();
+			Vec3f light_luminosity = al.getLuminosity();
+			Vec3f axes1 = al.getAxis1();
+			Vec3f axes2 = al.getAxis2();
+			Vec3f collected_illumination = Vec3f();
 			for (int i = 0; i < __NUM_CELLS_PER_ROW__; i++) {
 				for (int j = 0; j < __NUM_CELLS_PER_ROW__; j++) {
-					Vec3 light_direction = (
+					Vec3f light_direction = (
 						r.at(r.intersect_info.t)
 						- al.getPosition()
 						- al.getAxis1() * (2 * i - __NUM_CELLS_PER_ROW__ + random_jitters[i][j][0]) / __NUM_CELLS_PER_ROW__
@@ -108,7 +108,7 @@ void Renderer::render() {
 	for (int y = 0; y < camera_->getNumPixelsY(); y++) {
 		for (int x = 0; x < camera_->getNumPixelsX(); x++) {
 			Ray r = camera_->pixelToRay(x, y);
-			Vec3 px_color = Vec3();
+			Vec3f px_color = Vec3f();
 			for (auto it = scene_->lights.begin(); it != scene_->lights.end(); it++) {
 				Light* l = *it;
 				px_color += castRay_(r, *l);

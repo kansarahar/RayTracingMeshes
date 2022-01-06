@@ -11,5 +11,5 @@ public:
 	std::vector <Light*> lights;
 	void add(Mesh* m) { meshes.push_back(m); }
 	void add(Light* l) { lights.push_back(l); }
-	Vec3 getBackgroundColor() { return Vec3(0x87,0xCE,0xEB); }
+	Vec3f getBackgroundColor() { return Vec3f(0x87,0xCE,0xEB); }
 };

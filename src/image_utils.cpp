@@ -3,24 +3,10 @@
 #include "headers/vec.h"
 #include "headers/image_utils.h"
 
-ImageBufferPixel::ImageBufferPixel() : r(0), g(0), b(0) {}
-
-ImageBufferPixel::ImageBufferPixel(const Vec3& v) : r((int)v.x), g((int)v.y), b((int)v.z) {}
-
-ImageBufferPixel::ImageBufferPixel(int r, int g, int b) : r(r), g(g), b(b) {}
-
-void ImageBufferPixel::setPixelValues(const Vec3& v) {
-	r = (int)v.x; g = (int)v.y; b = (int)v.z;
-}
-
-void ImageBufferPixel::setPixelValues(int r, int g, int b) {
-	this->r = r; this->g = g; this->b = b;
-}
-
 ImageBuffer::ImageBuffer(int num_pixels_x, int num_pixels_y) {
 	num_pixels_x_ = num_pixels_x;
 	num_pixels_y_ = num_pixels_y;
-	pixel_grid_ = new ImageBufferPixel[num_pixels_y_ * num_pixels_x_];
+	pixel_grid_ = new Vec3i[num_pixels_y_ * num_pixels_x_];
 }
 
 ImageBuffer::~ImageBuffer() {
@@ -32,16 +18,16 @@ int ImageBuffer::getNumPixelsX() const { return num_pixels_x_; }
 int ImageBuffer::getNumPixelsY() const { return num_pixels_y_; }
 
 
-ImageBufferPixel ImageBuffer::getPixel(int x, int y) {
+Vec3i& ImageBuffer::getPixel(int x, int y) const {
 	return pixel_grid_[x + y * num_pixels_x_];
 }
 
-void ImageBuffer::setPixel(int x, int y, const Vec3& v) {
-	pixel_grid_[x + y * num_pixels_x_].setPixelValues(v);
+void ImageBuffer::setPixel(int x, int y, const Vec3f& v) {
+	pixel_grid_[x + y * num_pixels_x_] = Vec3i((int)v.x, (int)v.y, (int)v.z);
 }
 
 void ImageBuffer::setPixel(int x, int y, int r, int g, int b) {
-	pixel_grid_[x + y * num_pixels_x_].setPixelValues(r, g, b);
+	pixel_grid_[x + y * num_pixels_x_] = Vec3i(r, g, b);
 }
 
 void ImageBuffer::saveToPPM(std::string image_name) {
@@ -56,8 +42,8 @@ void ImageBuffer::saveToPPM(std::string image_name) {
 	image << "P3\n" << num_pixels_x_ << " " << num_pixels_y_ << "\n255\n";
 	for (int y = 0; y < num_pixels_y_; y++) {
 		for (int x = 0; x < num_pixels_x_; x++) {
-			ImageBufferPixel px = getPixel(x, y);
-			image << px.r << " " << px.g << " " << px.b << "\n";
+			Vec3i& px = getPixel(x, y);
+			image << px.x << " " << px.y << " " << px.z << "\n";
 		}
 	}
 	image.close();
@@ -118,10 +104,10 @@ void ImageBuffer::saveToBMP(std::string image_name) {
 	for (int y = num_pixels_y_ - 1; y >= 0; y--) {
 		// row of pixels
 		for (int x = 0; x < num_pixels_x_; x++) {
-			ImageBufferPixel px = getPixel(x, y);
-			const char r = px.r;
-			const char g = px.g;
-			const char b = px.b;
+			Vec3i px = getPixel(x, y);
+			const char r = px.x;
+			const char g = px.y;
+			const char b = px.z;
 			image.write(&b, 1);
 			image.write(&g, 1);
 			image.write(&r, 1);

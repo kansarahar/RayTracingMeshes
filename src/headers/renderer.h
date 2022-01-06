@@ -17,7 +17,7 @@ public:
 	void saveToBMP(std::string image_name);
 private:
 	bool trace_(Ray& r);
-	Vec3 castRay_(Ray& r, Light& l);
+	Vec3f castRay_(Ray& r, Light& l);
 
 	ImageBuffer* image_buffer_;
 	Scene* scene_;

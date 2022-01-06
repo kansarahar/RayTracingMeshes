@@ -8,10 +8,10 @@ Camera::Camera() {
 	num_pixels_y_ = (int)(fov_ * resolution_);
 	num_pixels_x_ = (int)(aspect_ * fov_ * resolution_);
 
-	position_ = Vec3(0.0f, 0.0f, 1.0f);
-	lookat_ = Vec3(0.0f, 0.0f, -1.0f);
-	up_ = Vec3(0.0f, 1.0f, 0.0f);
-	right_ = Vec3(1.0f, 0.0f, 0.0f);
+	position_ = Vec3f(0.0f, 0.0f, 1.0f);
+	lookat_ = Vec3f(0.0f, 0.0f, -1.0f);
+	up_ = Vec3f(0.0f, 1.0f, 0.0f);
+	right_ = Vec3f(1.0f, 0.0f, 0.0f);
 }
 
 Camera::Camera(float fov, float aspect, float resolution) {
@@ -21,10 +21,10 @@ Camera::Camera(float fov, float aspect, float resolution) {
 	num_pixels_y_ = (int)(fov_ * resolution_);
 	num_pixels_x_ = (int)(aspect_ * fov_ * resolution_);
 
-	position_ = Vec3(0.0f, 0.0f, 1.0f);
-	lookat_ = Vec3(0.0f, 0.0f, -1.0f);
-	up_ = Vec3(0.0f, 1.0f, 0.0f);
-	right_ = Vec3(1.0f, 0.0f, 0.0f);
+	position_ = Vec3f(0.0f, 0.0f, 1.0f);
+	lookat_ = Vec3f(0.0f, 0.0f, -1.0f);
+	up_ = Vec3f(0.0f, 1.0f, 0.0f);
+	right_ = Vec3f(1.0f, 0.0f, 0.0f);
 }
 
 int Camera::getNumPixelsX() { return num_pixels_x_; }
@@ -32,8 +32,8 @@ int Camera::getNumPixelsX() { return num_pixels_x_; }
 int Camera::getNumPixelsY() { return num_pixels_y_; }
 
 
-void Camera::translate(Vec3 v) {
-	Mat4 translation_matrix = Mat4();
+void Camera::translate(Vec3f v) {
+	Mat4f translation_matrix = Mat4f();
 	translation_matrix[0][3] = v.x;
 	translation_matrix[1][3] = v.y;
 	translation_matrix[2][3] = v.z;
@@ -43,7 +43,7 @@ void Camera::translate(Vec3 v) {
 
 void Camera::rotateSelfX(float degrees) {
 	float theta = degrees * (float)M_PI / 180;
-	Mat4 rotation_matrix = Mat4();
+	Mat4f rotation_matrix = Mat4f();
 	rotation_matrix[1][1] = cos(theta);
 	rotation_matrix[1][2] = -sin(theta);
 	rotation_matrix[2][2] = cos(theta);
@@ -56,7 +56,7 @@ void Camera::rotateSelfX(float degrees) {
 
 void Camera::rotateSelfY(float degrees) {
 	float theta = degrees * (float)M_PI / 180;
-	Mat4 rotation_matrix = Mat4();
+	Mat4f rotation_matrix = Mat4f();
 	rotation_matrix[0][0] = cos(theta);
 	rotation_matrix[0][2] = sin(theta);
 	rotation_matrix[2][0] = -sin(theta);
@@ -69,7 +69,7 @@ void Camera::rotateSelfY(float degrees) {
 
 void Camera::rotateSelfZ(float degrees) {
 	float theta = degrees * (float)M_PI / 180;
-	Mat4 rotation_matrix = Mat4();
+	Mat4f rotation_matrix = Mat4f();
 	rotation_matrix[0][0] = cos(theta);
 	rotation_matrix[0][1] = -sin(theta);
 	rotation_matrix[1][0] = sin(theta);

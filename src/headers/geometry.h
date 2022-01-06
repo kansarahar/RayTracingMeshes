@@ -3,38 +3,28 @@
 #include <vector>
 #include "vec.h"
 
-// simple struct that holds the array position of its vertices
-struct Face {
-	int v0;
-	int v1;
-	int v2;
-
-	Face(int v0, int v1, int v2) : v0(v0), v1(v1), v2(v2) {}
-};
-
 // base class, will be used to construct meshes
 class Geometry {
 public:
-	std::vector<Vec3> getVertices() { return vertices_; }
-	std::vector<Face> getFaces() { return faces_; }
-	std::vector<Vec3> getVertexNormals() { return vertex_normals_; }
+	std::vector<Vec3f> getVertices() { return vertices_; }
+	std::vector<Vec3f> getVertexNormals() { return vertex_normals_; }
+	std::vector<Vec3i> getFaces() { return faces_; }
 
 protected:
 	//virtual void constructGeometry() = 0;
-	void setVertices(std::vector<Vec3> vertices) { vertices_ = vertices; }
-	void setFaces(std::vector<Face> faces) { faces_ = faces; }
-
-	void setVertexNormals(std::vector<Vec3> vertex_normals) { vertex_normals_ = vertex_normals; }
+	void setVertices(std::vector<Vec3f> vertices) { vertices_ = vertices; }
+	void setVertexNormals(std::vector<Vec3f> vertex_normals) { vertex_normals_ = vertex_normals; }
+	void setFaces(std::vector<Vec3i> faces) { faces_ = faces; }
 
 private:
-	std::vector<Vec3> vertices_;
-	std::vector<Vec3> vertex_normals_;
-	std::vector<Face> faces_;
+	std::vector<Vec3f> vertices_;
+	std::vector<Vec3f> vertex_normals_;
+	std::vector<Vec3i> faces_;
 };
 
 class TriangleGeometry : public Geometry {
 public:
-	TriangleGeometry(Vec3 v1, Vec3 v2);
+	TriangleGeometry(Vec3f v1, Vec3f v2);
 };
 
 class CubeGeometry : public Geometry {
