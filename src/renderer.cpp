@@ -22,8 +22,7 @@ Renderer::~Renderer() {
 
 bool Renderer::trace_(Ray& r) {
 	bool hit = false;
-	for (auto it = scene_->meshes.begin(); it != scene_->meshes.end(); ++it) {
-		Mesh* mesh = *it;
+	for (Mesh* mesh : scene_->meshes) {
 		hit = mesh->intersect(r) || hit;
 	}
 	return hit;
