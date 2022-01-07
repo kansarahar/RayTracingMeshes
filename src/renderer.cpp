@@ -101,16 +101,15 @@ Vec3f Renderer::castRay_(Ray& r, Light& l) {
 
 void Renderer::render() {
 	// apply transformations to all meshes before rendering image
-	for (auto it = scene_->meshes.begin(); it != scene_->meshes.end(); it++) {
-		(*it)->applyTransformations();
+	for (Mesh* mesh : scene_->meshes) {
+		mesh->applyTransformations();
 	}
 	// render image
 	for (int y = 0; y < camera_->getNumPixelsY(); y++) {
 		for (int x = 0; x < camera_->getNumPixelsX(); x++) {
 			Ray r = camera_->pixelToRay(x, y);
 			Vec3f px_color = Vec3f();
-			for (auto it = scene_->lights.begin(); it != scene_->lights.end(); it++) {
-				Light* l = *it;
+			for (Light* l : scene_->lights) {
 				px_color += castRay_(r, *l);
 			}
 			image_buffer_->setPixel(x, y, px_color);

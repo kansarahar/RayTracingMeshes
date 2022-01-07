@@ -26,8 +26,7 @@ void Mesh::useVertexNormals() { use_vertex_normals_ = true; }
 
 bool Mesh::intersect(Ray& r) {
 	bool hit = false;
-	for (int face_idx = 0; face_idx < faces_.size(); face_idx++) {
-		Vec3i& face = faces_[face_idx];
+	for (Vec3i face : faces_) {
 		hit = mt_intersect_helper_(face, r) || hit;
 	}
 	return hit;
@@ -86,8 +85,8 @@ void Mesh::rotateSelfZ(float degrees) {
 }
 
 void Mesh::applyTransformations() {
-	for (auto it = vertices_.begin(); it != vertices_.end(); it++) {
-		(*it) = transformations_ * (*it);
+	for (Vec3f& vertex : vertices_) {
+		vertex = transformations_ * vertex;
 	}
 
 	// transform vertex normals
@@ -106,8 +105,8 @@ void Mesh::applyTransformations() {
 	vn_transformations[2][2] = t_[1][1] * t_[2][2] - t_[1][2] * t_[2][1];
 
 	vn_transformations = vn_transformations.transpose();
-	for (auto it = vertex_normals_.begin(); it != vertex_normals_.end(); it++) {
-		(*it) = (vn_transformations * (*it)).unit();
+	for (Vec3f& vertex_normal : vertex_normals_) {
+		vertex_normal = (vn_transformations * vertex_normal).unit();
 	}
 }
 
