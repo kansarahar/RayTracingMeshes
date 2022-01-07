@@ -26,7 +26,7 @@ void Mesh::useVertexNormals() { use_vertex_normals_ = true; }
 
 bool Mesh::intersect(Ray& r) {
 	bool hit = false;
-	for (Vec3i face : faces_) {
+	for (Vec3i& face : faces_) {
 		hit = mt_intersect_helper_(face, r) || hit;
 	}
 	return hit;
