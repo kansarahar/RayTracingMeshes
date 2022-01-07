@@ -4,7 +4,14 @@
 #include "vec.h"
 #include "geometry.h"
 
-
+class BoundingSphere {
+public:
+	BoundingSphere();
+	BoundingSphere(Vec3f center, float radius);
+	Vec3f center;
+	float radius;
+	bool intersect(Ray& r);
+};
 
 class Mesh {
 public:
@@ -25,6 +32,7 @@ public:
 	Vec3f color;
 private:
 	bool mt_intersect_helper_(Vec3i& face, Ray& r);
+	void calculate_bounding_sphere_();
 
 	std::vector<Vec3f> vertices_;
 	std::vector<Vec3f> vertex_normals_;
@@ -33,6 +41,7 @@ private:
 	bool use_vertex_normals_;
 	Vec3f position_;
 	Mat4f transformations_;
+	BoundingSphere bounding_sphere_;
 };
 
 
